@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.broadfactor.entidade.UsuarioEntidade;
-import com.broadfactor.respositorio.UsuarioRepositorio;
+import com.broadfactor.domain.model.UsuarioEntidade;
+import com.broadfactor.domain.respositorio.UsuarioRepositorio;
 
 
 @Service
