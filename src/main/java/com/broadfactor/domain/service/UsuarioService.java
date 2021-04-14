@@ -37,7 +37,7 @@ public class UsuarioService {
 		//verifica se já existe um usuário com esse nome
 		Optional<UsuarioEntidade> encontrou= usuarioRepository.findByNome(nome);
 		if(encontrou.isEmpty()) return true;
-		else return false; 
+		else throw new EntidadeNaoEncontradaException("Nome de usuário já está em uso, por favor escolha outro");
 		
 	}
 
@@ -74,7 +74,8 @@ public class UsuarioService {
 				throw new EntidadeNaoEncontradaException("Senha incorreta");
 			}
 		}else {
-			throw new EntidadeNaoEncontradaException("Nome de usuário não encontrado");
+			throw new EntidadeNaoEncontradaException("Nome de usuário não encontrado, "
+					+ "por favor verifique se o mesmo está correto");
 		}
 	}
 
@@ -92,8 +93,10 @@ public class UsuarioService {
 		else throw new EntidadeNaoEncontradaException("id_usuário de usuário não encontrado");
 	}
 	
-	public UsuarioEntidade alteraUsuario(UsuarioEntidade user) {
+	public UsuarioEntidade alteraUsuario(UsuarioEntidade user, long id_usuario) {
 		Optional<UsuarioEntidade> encontrou= usuarioRepository.findByNome(user.getNome());
+		//para garantir que será passado o id usuário
+		user.setId_usuario(id_usuario);
 		if(encontrou.isPresent() && encontrou.get().getId_usuario() != user.getId_usuario()) {
 			//está tentando mudar o nome para um usuário que já existe 
 			throw new CadastroException("nome de usuário já existente, por favor tente outro!");
