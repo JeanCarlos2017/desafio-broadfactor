@@ -1,6 +1,7 @@
 package com.broadfactor.api.exception;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,7 +14,7 @@ public class Problema {
 	private Integer status;
 	private OffsetDateTime dataHora;
 	private String titulo;
-	private List<Campo> campos;
+	private List<Campo> campos= new ArrayList<>();
 
 	public static class Campo {
 
@@ -74,5 +75,9 @@ public class Problema {
 
 	public void setCampos(List<Campo> campos) {
 		this.campos = campos;
+	}
+	
+	public void addCampo(String nome, String mensagem) {
+		this.campos.add(new Campo(nome, mensagem));
 	}
 }
