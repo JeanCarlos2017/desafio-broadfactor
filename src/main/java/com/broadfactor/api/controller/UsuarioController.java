@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.broadfactor.domain.model.EmpresaEntidade;
 import com.broadfactor.domain.model.UsuarioEntidade;
 import com.broadfactor.domain.model.UsuarioLogin;
+import com.broadfactor.domain.service.EmpresaService;
 import com.broadfactor.domain.service.UsuarioService;
 
 @RestController
@@ -28,6 +30,9 @@ import com.broadfactor.domain.service.UsuarioService;
 public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private EmpresaService empresaService;
 	
 	@GetMapping("/listar")
 	public ResponseEntity<List<UsuarioEntidade>> getAll(){
@@ -66,5 +71,12 @@ public class UsuarioController {
 	private ResponseEntity<UsuarioEntidade> valida(UsuarioEntidade user, HttpStatus status){
 		if (user == null) return ResponseEntity.badRequest().build();
 		else return ResponseEntity.status(status).body(user);
+	}
+	
+	@GetMapping("/get/empresa/{cnpj}")
+	public ResponseEntity<EmpresaEntidade> getCNPJTeste2(@PathVariable String cnpj) throws Exception{
+		EmpresaEntidade dadosEmpresa= this.empresaService.buscaEmpresaPeloCNPJ(cnpj);
+		if (dadosEmpresa == null) return ResponseEntity.badRequest().build();
+		else return ResponseEntity.status(HttpStatus.OK).body(dadosEmpresa);
 	}
 }
