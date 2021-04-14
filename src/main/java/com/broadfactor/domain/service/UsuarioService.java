@@ -123,4 +123,10 @@ public class UsuarioService {
 		//por fim salva o usuário
 		return this.usuarioRepository.save(user);
 	}
+	
+	public void deleteUsuario(long id) {
+		Optional<UsuarioEntidade> user= this.usuarioRepository.findById(id);
+		if(user.isEmpty()) throw new EntidadeNaoEncontradaException("id de usuário não encontrado");
+		else this.usuarioRepository.delete(user.get());
+	}
 }
