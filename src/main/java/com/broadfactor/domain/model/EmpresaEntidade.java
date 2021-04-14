@@ -5,14 +5,39 @@ import java.util.List;
 
 
 public class EmpresaEntidade {
-	private List<AtividadePrincipal> atividade_principal= new ArrayList<>();
+	
+	private List<AtividadePrincipalEntidade> atividade_principal= new ArrayList<>();
+	
 	private String data_situacao;
 	
-	public List<AtividadePrincipal> getAtividade_principal() {
+	private String nome;
+	
+	private String telefone;
+	
+	private String email;
+	
+	private String cep;
+	
+	private String situacao;
+	
+	private String fantasia;
+	
+	private String abertura;
+	
+	private String cnpj;
+	
+
+	public EmpresaEntidade() {
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	
+	public List<AtividadePrincipalEntidade> getAtividade_principal() {
 		return atividade_principal;
 	}
 
-	public void setAtividade_principal(List<AtividadePrincipal> atividade_principal) {
+	public void setAtividade_principal(List<AtividadePrincipalEntidade> atividade_principal) {
 		this.atividade_principal = atividade_principal;
 	}
 
@@ -24,69 +49,69 @@ public class EmpresaEntidade {
 		this.data_situacao = data_situacao;
 	}
 
-
-
-	private class AtividadePrincipal{
-		private String text;
-		private String code;
-		public String getText() {
-			return text;
-		}
-		public void setText(String text) {
-			this.text = text;
-		}
-		public String getCode() {
-			return code;
-		}
-		public void setCode(String code) {
-			this.code = code;
-		}
-		
+	public String getNome() {
+		return nome;
 	}
 
-
-//"tipo": "MATRIZ",
-//"nome": "PAULA CRISTINA PEREIRA FRANCA 36103245893",
-//"telefone": "(11) 4636-7202",
-//"email": "lellapiu90@gmail.com",
-//"atividades_secundarias": [
-//    {
-//        "text": "Fornecimento de alimentos preparados preponderantemente para consumo domiciliar",
-//        "code": "56.20-1-04"
-//    },
-//    {
-//        "text": "Fabricação de produtos derivados do cacau e de chocolates",
-//        "code": "10.93-7-01"
-//    }
-//],
-//"situacao": "ATIVA",
-//"bairro": "JARDIM NOVA POA",
-//"logradouro": "RUA CAPITAO PEDRO ESPERIDIAO HOFFER",
-//"numero": "150",
-//"cep": "08.568-700",
-//"municipio": "POA",
-//"fantasia": "LELLA DOCES",
-//"porte": "MICRO EMPRESA",
-//"abertura": "09/07/2018",
-//"natureza_juridica": "213-5 - Empresário (Individual)",
-//"uf": "SP",
-//"cnpj": "30.885.426/0001-30",
-//"ultima_atualizacao": "2020-11-23T23:59:59.000Z",
-//"status": "OK",
-//"complemento": "",
-//"efr": "",
-//"motivo_situacao": "",
-//"situacao_especial": "",
-//"data_situacao_especial": "",
-//"capital_social": "1000.00",
-//"qsa": [],
-//"extra": {},
-//"billing": {
-//    "free": true,
-//    "database": true
-//}
-	public EmpresaEntidade() {
-		// TODO Auto-generated constructor stub
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
+	}
+
+	public String getFantasia() {
+		return fantasia;
+	}
+
+	public void setFantasia(String fantasia) {
+		this.fantasia = fantasia;
+	}
+
+	public String getAbertura() {
+		return abertura;
+	}
+
+	public void setAbertura(String abertura) {
+		this.abertura = abertura;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+	
+	
 }
