@@ -11,6 +11,6 @@ import com.broadfactor.domain.model.UsuarioEntidade;
 public interface UsuarioRepositorio extends JpaRepository<UsuarioEntidade, Long> {
 
 	Optional<UsuarioEntidade> findByNome(String userName);
-
+	Optional<UsuarioEntidade> findByEmail(String userName);
 
 }

@@ -42,6 +42,10 @@ public class UsuarioService {
 	}
 
 	public UsuarioEntidade cadastraUsuario(UsuarioEntidade usuario) {
+		//verifico se o emial já existe 
+		if(this.usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+			throw new CadastroException("Email já existente, por favor tente outro!");
+		}
 		//verifica se o email e nome sao válidos 
 		if(this.validaEmail(usuario.getEmail()) && this.validaNome(usuario.getNome())) {
 			//criptografa a senha do usuário 
@@ -100,6 +104,12 @@ public class UsuarioService {
 		if(encontrou.isPresent() && encontrou.get().getId_usuario() != user.getId_usuario()) {
 			//está tentando mudar o nome para um usuário que já existe 
 			throw new CadastroException("nome de usuário já existente, por favor tente outro!");
+		}
+		//verifica email
+		encontrou= usuarioRepository.findByEmail(user.getEmail());
+		if(encontrou.isPresent() && encontrou.get().getId_usuario() != user.getId_usuario()) {
+			//está tentando mudar o email para um email que já existe em outro usuário
+			throw new CadastroException("E-mail já existente, por favor tente outro!");
 		}
 		
 		if(!this.validaEmail(user.getEmail())) {
