@@ -1,4 +1,4 @@
-package com.broadfactor.entidade;
+package com.broadfactor.domain.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
