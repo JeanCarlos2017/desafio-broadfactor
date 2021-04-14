@@ -5,21 +5,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Entity @Table(name="tb_usuario")
 public class UsuarioEntidade {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_usuario;
 	
-	@NotNull
+	@NotBlank(message = "{email.not.blank}")
+	@Email(message = "{email.not.valid}")
 	private String email;
 	
-	@NotNull
+	@NotBlank(message = "{senha.not.blank}")
 	private String senha;
 	
-	@NotNull
+	@NotBlank(message = "{name.not.blank}")
 	private String nome;
+	
+	@NotBlank(message = "{cnpj.not.blank}")
+	private String cnpj;
 
 	public long getId_usuario() {
 		return id_usuario;
@@ -52,6 +57,15 @@ public class UsuarioEntidade {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+	
 	
 	
 }
