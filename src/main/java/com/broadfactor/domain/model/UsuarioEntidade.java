@@ -1,9 +1,11 @@
 package com.broadfactor.domain.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -25,7 +27,10 @@ public class UsuarioEntidade {
 	
 	@NotBlank(message = "{cnpj.not.blank}")
 	private String cnpj;
-
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private EmpresaEntidade empresa;
+	
 	public long getId_usuario() {
 		return id_usuario;
 	}
@@ -64,6 +69,14 @@ public class UsuarioEntidade {
 
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
+	}
+
+	public EmpresaEntidade getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(EmpresaEntidade empresa) {
+		this.empresa = empresa;
 	}
 	
 	
