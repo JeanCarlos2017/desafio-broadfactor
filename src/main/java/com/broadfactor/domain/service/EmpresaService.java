@@ -36,9 +36,14 @@ public class EmpresaService {
 			BufferedReader resposta = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
 			String jsonEmString = Util.converteJsonEmString(resposta);
 			
+			//em caso de erro
+			if(jsonEmString.indexOf("ERROR") != -1) {
+				return null;
+			}
+			
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
 			EmpresaEntidade empresaEntidade = gson.fromJson(jsonEmString, EmpresaEntidade.class);
-
+			
 			return empresaEntidade;
 		} catch (Exception e) {
 			// throw new RequisicaoException("Erro de requisição: "+ e);
@@ -48,7 +53,6 @@ public class EmpresaService {
 
 	public EmpresaEntidade salvarEmpresa(String cnpj) throws Exception {
 		Optional<EmpresaEntidade> buscaNoJPA = this.empresaRepositorio.findByCnpj(cnpj);
-		System.out.println(cnpj);
 		if (buscaNoJPA.isPresent()) {
 			// já existe uma empresa com esse cnpj no banco
 			return buscaNoJPA.get();

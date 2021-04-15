@@ -103,7 +103,7 @@ public class UsuarioService {
 		else throw new EntidadeNaoEncontradaException("id_usuário de usuário não encontrado");
 	}
 	
-	public UsuarioEntidade alteraUsuario(UsuarioEntidade user, long id_usuario) {
+	public UsuarioEntidade alteraUsuario(UsuarioEntidade user, long id_usuario) throws Exception {
 		Optional<UsuarioEntidade> encontrou= usuarioRepository.findByNome(user.getNome());
 		//para garantir que será passado o id usuário
 		user.setId_usuario(id_usuario);
@@ -126,6 +126,8 @@ public class UsuarioService {
 		BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
 		String senhaEncoder= encoder.encode(user.getSenha());
 		user.setSenha(senhaEncoder);
+		//caso necessário atuliza a empresa relacionado ao usuário 
+		user.setEmpresa(this.empresaService.salvarEmpresa(user.getCnpj()));
 		//por fim salva o usuário
 		return this.usuarioRepository.save(user);
 	}
