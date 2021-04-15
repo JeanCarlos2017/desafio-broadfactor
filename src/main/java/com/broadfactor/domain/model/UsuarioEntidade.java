@@ -28,7 +28,7 @@ public class UsuarioEntidade {
 	@NotBlank(message = "{cnpj.not.blank}")
 	private String cnpj;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private EmpresaEntidade empresa;
 	
 	public long getId_usuario() {

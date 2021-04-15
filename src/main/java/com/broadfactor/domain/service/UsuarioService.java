@@ -28,6 +28,10 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepositorio usuarioRepository;
 	
+	@Autowired
+	private EmpresaService empresaService;
+	
+	
 	private boolean validaEmail(String email) {
 		Matcher matcher = pattern.matcher(email);
 	    return matcher.matches();
@@ -41,7 +45,7 @@ public class UsuarioService {
 		
 	}
 
-	public UsuarioEntidade cadastraUsuario(UsuarioEntidade usuario) {
+	public UsuarioEntidade cadastraUsuario(UsuarioEntidade usuario) throws Exception {
 		//verifico se o emial já existe 
 		if(this.usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
 			throw new CadastroException("Email já existente, por favor tente outro!");
@@ -52,6 +56,8 @@ public class UsuarioService {
 			BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
 			String senhaEncoder= encoder.encode(usuario.getSenha());
 			usuario.setSenha(senhaEncoder);
+			//vincula o usuário com a empresa 
+			usuario.setEmpresa(this.empresaService.salvarEmpresa(usuario.getCnpj()));
 			//por fim salva o usuário
 			return usuarioRepository.save(usuario);
 		}else return null;
