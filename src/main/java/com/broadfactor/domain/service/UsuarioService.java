@@ -2,8 +2,6 @@ package com.broadfactor.domain.service;
 
 import java.nio.charset.Charset;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +18,12 @@ import com.broadfactor.domain.respositorio.UsuarioRepositorio;
 
 @Service
 public class UsuarioService {
-	//validação de email
-	private static final String EMAIL_PATTERN = 
-	        "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-	        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
 	@Autowired
 	private UsuarioRepositorio usuarioRepository;
 	
 	@Autowired
 	private EmpresaService empresaService;
 	
-	
-	private boolean validaEmail(String email) {
-		Matcher matcher = pattern.matcher(email);
-	    return matcher.matches();
-	}
-
 	private boolean validaNome(String nome) {
 		//verifica se já existe um usuário com esse nome
 		Optional<UsuarioEntidade> encontrou= usuarioRepository.findByNome(nome);
@@ -50,8 +37,8 @@ public class UsuarioService {
 		if(this.usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
 			throw new CadastroException("Email já existente, por favor tente outro!");
 		}
-		//verifica se o email e nome sao válidos 
-		if(this.validaEmail(usuario.getEmail()) && this.validaNome(usuario.getNome())) {
+		// nome sao válidos 
+		if(this.validaNome(usuario.getNome())) {
 			//criptografa a senha do usuário 
 			BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
 			String senhaEncoder= encoder.encode(usuario.getSenha());
@@ -118,9 +105,6 @@ public class UsuarioService {
 			throw new CadastroException("E-mail já existente, por favor tente outro!");
 		}
 		
-		if(!this.validaEmail(user.getEmail())) {
-			throw new CadastroException("e-mail inválido, por favor verifique");
-		}
 		//passou nas verificações então começo o processo para salvar o usuário 
 		//criptografa a senha do usuário 
 		BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
