@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.broadfactor.domain.exception.RequisicaoException;
+import com.broadfactor.domain.model.AtividadePrincipalEntidade;
 import com.broadfactor.domain.model.EmpresaEntidade;
 import com.broadfactor.domain.respositorio.EmpresaRepositorio;
 import com.google.gson.Gson;
@@ -22,6 +24,8 @@ public class EmpresaService {
 	
 	@Autowired
 	private EmpresaRepositorio empresaRepositorio;
+	@Autowired
+	private AtividadeService atividadeService;
 
 	private EmpresaEntidade buscaEmpresaPeloCNPJ(String cnpj) throws Exception {
 		String urlParaChamada = webService + cnpj;
@@ -60,9 +64,16 @@ public class EmpresaService {
 		} else {
 			// tenta fazer a busca da empresa na api
 			EmpresaEntidade empresa = this.buscaEmpresaPeloCNPJ(cnpj);
+			
 			if(empresa != null) {
 				//o cnpj vai ter apenas números 
 				empresa.setCnpj(cnpj);
+				//salva a empresa sem as atividades
+				empresa= this.empresaRepositorio.save(empresa);
+				//salva as atividades da empresa no banco
+				List<AtividadePrincipalEntidade> atividadeList= this.atividadeService.saveAtividadeDaEmpresa(empresa);
+				//ligação entre empresa e atividade
+				empresa.setAtividade_principal(atividadeList);
 				empresa= this.empresaRepositorio.save(empresa);
 			}
 			return empresa;
